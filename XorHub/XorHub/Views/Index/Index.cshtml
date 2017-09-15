@@ -1,0 +1,208 @@
+﻿@model XorHub.LoginInfo
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <style>
+body {font-family: "Lato", sans-serif;}
+
+/* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    width:400px;
+    
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+    float: center;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    -webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s;
+}
+
+    </style>
+</head>
+<body>
+    <center>
+        <h3>Welcome to XorHub</h3>
+
+        <div class="tab">
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'Login')" id="defaultOpen">Login</button>
+                <button class="tablinks" onclick="openTab(event, 'Signup')">Signup</button>
+            </div>
+
+            <div>
+                @ViewBag.Message
+            </div>
+
+            <div id="Login" class="tabcontent">
+    @using (Html.BeginForm("Login", "Index", FormMethod.Post))
+    {
+        <table cellpadding="10">
+
+            <tr>
+                <td>
+                    @Html.LabelFor(u => u.Username) 
+                </td>
+                <td>
+                    @Html.TextBoxFor(u => u.Username) 
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    @Html.ValidationMessageFor(u => u.Username)
+                </td>                        
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(u => u.Passwd)
+                </td>
+                <td>
+                    @Html.PasswordFor(u => u.Passwd)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    @Html.ValidationMessageFor(u => u.Passwd)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <input type="submit" value="Login" />
+                </td>
+            </tr>
+                </table>
+                    }
+    </div>
+
+            <div id="Signup" class="tabcontent">
+                <br />
+@using (Html.BeginForm("Register", "Index", FormMethod.Post))
+{
+
+                <table cellpadding="10">
+
+                    <tr>
+                        <td>
+                            @Html.LabelFor(u => u.Name)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(u => u.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            @Html.ValidationMessageFor(u => u.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(u => u.Username)
+                            
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(u => u.Username)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            @Html.ValidationMessageFor(u => u.Username)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(u => u.Passwd)
+                            
+                        </td>
+                        <td>
+                            @Html.PasswordFor(u => u.Passwd)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            @Html.ValidationMessageFor(u => u.Passwd)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(u => u.Usertype)
+                        </td>
+                        <td>
+                            @Html.DropDownList("UserType", new SelectListItem[]
+                                {
+                                    new SelectListItem() { Text = "Student", Value = "S"},
+                                    new SelectListItem() { Text = "Teacher", Value = "T"}
+                                })
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.Label("Batch")
+                        </td>
+                        <td>
+                            @Html.DropDownList("BatchId", (IEnumerable<SelectListItem>)ViewData["BatchList"])
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+
+                <br />
+                <input type="submit" value="Signup" />
+}
+            </div>
+        </div>
+</center>
+    <script>
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+document.getElementById("defaultOpen").click();
+    </script>
+
+</body>

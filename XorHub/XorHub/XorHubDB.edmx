@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="XorHubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Assignment">
+          <Key>
+            <PropertyRef Name="AssignmentId" />
+          </Key>
+          <Property Name="AssignmentId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PostedDate" Type="datetime" Nullable="false" />
+          <Property Name="TeacherId" Type="varchar" MaxLength="10" />
+          <Property Name="Deadline" Type="datetime" Nullable="false" />
+          <Property Name="BatchId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Document" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Batch">
+          <Key>
+            <PropertyRef Name="BatchId" />
+          </Key>
+          <Property Name="BatchId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="LoginInfo">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Passwd" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Usertype" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Stat" Type="bit" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="BatchId" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Solution">
+          <Key>
+            <PropertyRef Name="SolutionId" />
+          </Key>
+          <Property Name="SolutionId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="AssignmentId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Username" Type="varchar" MaxLength="10" />
+          <Property Name="Stat" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="UploadedOn" Type="datetime" Nullable="false" />
+          <Property Name="Document" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Comment" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Assignmen__Batch__2A4B4B5E">
+          <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+          <End Role="Assignment" Type="Self.Assignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batch">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="Assignment">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Assignmen__Teach__29572725">
+          <End Role="LoginInfo" Type="Self.LoginInfo" Multiplicity="0..1" />
+          <End Role="Assignment" Type="Self.Assignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginInfo">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Assignment">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoginInfo__Batch__25869641">
+          <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+          <End Role="LoginInfo" Type="Self.LoginInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batch">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="LoginInfo">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Solution__Assign__2D27B809">
+          <End Role="Assignment" Type="Self.Assignment" Multiplicity="0..1" />
+          <End Role="Solution" Type="Self.Solution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assignment">
+              <PropertyRef Name="AssignmentId" />
+            </Principal>
+            <Dependent Role="Solution">
+              <PropertyRef Name="AssignmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Solution__Userna__2E1BDC42">
+          <End Role="LoginInfo" Type="Self.LoginInfo" Multiplicity="0..1" />
+          <End Role="Solution" Type="Self.Solution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginInfo">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Solution">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="XorHubModelStoreContainer">
+          <EntitySet Name="Assignment" EntityType="Self.Assignment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginInfo" EntityType="Self.LoginInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Solution" EntityType="Self.Solution" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Assignmen__Batch__2A4B4B5E" Association="Self.FK__Assignmen__Batch__2A4B4B5E">
+            <End Role="Batch" EntitySet="Batch" />
+            <End Role="Assignment" EntitySet="Assignment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Assignmen__Teach__29572725" Association="Self.FK__Assignmen__Teach__29572725">
+            <End Role="LoginInfo" EntitySet="LoginInfo" />
+            <End Role="Assignment" EntitySet="Assignment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoginInfo__Batch__25869641" Association="Self.FK__LoginInfo__Batch__25869641">
+            <End Role="Batch" EntitySet="Batch" />
+            <End Role="LoginInfo" EntitySet="LoginInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Solution__Assign__2D27B809" Association="Self.FK__Solution__Assign__2D27B809">
+            <End Role="Assignment" EntitySet="Assignment" />
+            <End Role="Solution" EntitySet="Solution" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Solution__Userna__2E1BDC42" Association="Self.FK__Solution__Userna__2E1BDC42">
+            <End Role="LoginInfo" EntitySet="LoginInfo" />
+            <End Role="Solution" EntitySet="Solution" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="XorHubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Assignment">
+          <Key>
+            <PropertyRef Name="AssignmentId" />
+          </Key>
+          <Property Name="AssignmentId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PostedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TeacherId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BatchId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Document" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Batch" Relationship="Self.FK__Assignmen__Batch__2A4B4B5E" FromRole="Assignment" ToRole="Batch" />
+          <NavigationProperty Name="LoginInfo" Relationship="Self.FK__Assignmen__Teach__29572725" FromRole="Assignment" ToRole="LoginInfo" />
+          <NavigationProperty Name="Solutions" Relationship="Self.FK__Solution__Assign__2D27B809" FromRole="Assignment" ToRole="Solution" />
+        </EntityType>
+        <EntityType Name="Batch">
+          <Key>
+            <PropertyRef Name="BatchId" />
+          </Key>
+          <Property Name="BatchId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Assignments" Relationship="Self.FK__Assignmen__Batch__2A4B4B5E" FromRole="Batch" ToRole="Assignment" />
+          <NavigationProperty Name="LoginInfoes" Relationship="Self.FK__LoginInfo__Batch__25869641" FromRole="Batch" ToRole="LoginInfo" />
+        </EntityType>
+        <EntityType Name="LoginInfo">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Passwd" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Usertype" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Stat" Type="Boolean" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BatchId" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Assignments" Relationship="Self.FK__Assignmen__Teach__29572725" FromRole="LoginInfo" ToRole="Assignment" />
+          <NavigationProperty Name="Batch" Relationship="Self.FK__LoginInfo__Batch__25869641" FromRole="LoginInfo" ToRole="Batch" />
+          <NavigationProperty Name="Solutions" Relationship="Self.FK__Solution__Userna__2E1BDC42" FromRole="LoginInfo" ToRole="Solution" />
+        </EntityType>
+        <EntityType Name="Solution">
+          <Key>
+            <PropertyRef Name="SolutionId" />
+          </Key>
+          <Property Name="SolutionId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="AssignmentId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Username" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Stat" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UploadedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Document" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Assignment" Relationship="Self.FK__Solution__Assign__2D27B809" FromRole="Solution" ToRole="Assignment" />
+          <NavigationProperty Name="LoginInfo" Relationship="Self.FK__Solution__Userna__2E1BDC42" FromRole="Solution" ToRole="LoginInfo" />
+        </EntityType>
+        <Association Name="FK__Assignmen__Batch__2A4B4B5E">
+          <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+          <End Role="Assignment" Type="Self.Assignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batch">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="Assignment">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Assignmen__Teach__29572725">
+          <End Role="LoginInfo" Type="Self.LoginInfo" Multiplicity="0..1" />
+          <End Role="Assignment" Type="Self.Assignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginInfo">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Assignment">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Solution__Assign__2D27B809">
+          <End Role="Assignment" Type="Self.Assignment" Multiplicity="0..1" />
+          <End Role="Solution" Type="Self.Solution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assignment">
+              <PropertyRef Name="AssignmentId" />
+            </Principal>
+            <Dependent Role="Solution">
+              <PropertyRef Name="AssignmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoginInfo__Batch__25869641">
+          <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+          <End Role="LoginInfo" Type="Self.LoginInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batch">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="LoginInfo">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Solution__Userna__2E1BDC42">
+          <End Role="LoginInfo" Type="Self.LoginInfo" Multiplicity="0..1" />
+          <End Role="Solution" Type="Self.Solution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginInfo">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Solution">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="XorHubEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Assignments" EntityType="Self.Assignment" />
+          <EntitySet Name="Batches" EntityType="Self.Batch" />
+          <EntitySet Name="LoginInfoes" EntityType="Self.LoginInfo" />
+          <EntitySet Name="Solutions" EntityType="Self.Solution" />
+          <AssociationSet Name="FK__Assignmen__Batch__2A4B4B5E" Association="Self.FK__Assignmen__Batch__2A4B4B5E">
+            <End Role="Batch" EntitySet="Batches" />
+            <End Role="Assignment" EntitySet="Assignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Assignmen__Teach__29572725" Association="Self.FK__Assignmen__Teach__29572725">
+            <End Role="LoginInfo" EntitySet="LoginInfoes" />
+            <End Role="Assignment" EntitySet="Assignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Solution__Assign__2D27B809" Association="Self.FK__Solution__Assign__2D27B809">
+            <End Role="Assignment" EntitySet="Assignments" />
+            <End Role="Solution" EntitySet="Solutions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoginInfo__Batch__25869641" Association="Self.FK__LoginInfo__Batch__25869641">
+            <End Role="Batch" EntitySet="Batches" />
+            <End Role="LoginInfo" EntitySet="LoginInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Solution__Userna__2E1BDC42" Association="Self.FK__Solution__Userna__2E1BDC42">
+            <End Role="LoginInfo" EntitySet="LoginInfoes" />
+            <End Role="Solution" EntitySet="Solutions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="XorHubModelStoreContainer" CdmEntityContainer="XorHubEntities">
+          <EntitySetMapping Name="Assignments">
+            <EntityTypeMapping TypeName="XorHubModel.Assignment">
+              <MappingFragment StoreEntitySet="Assignment">
+                <ScalarProperty Name="AssignmentId" ColumnName="AssignmentId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="Document" ColumnName="Document" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Batches">
+            <EntityTypeMapping TypeName="XorHubModel.Batch">
+              <MappingFragment StoreEntitySet="Batch">
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginInfoes">
+            <EntityTypeMapping TypeName="XorHubModel.LoginInfo">
+              <MappingFragment StoreEntitySet="LoginInfo">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Passwd" ColumnName="Passwd" />
+                <ScalarProperty Name="Usertype" ColumnName="Usertype" />
+                <ScalarProperty Name="Stat" ColumnName="Stat" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Solutions">
+            <EntityTypeMapping TypeName="XorHubModel.Solution">
+              <MappingFragment StoreEntitySet="Solution">
+                <ScalarProperty Name="SolutionId" ColumnName="SolutionId" />
+                <ScalarProperty Name="AssignmentId" ColumnName="AssignmentId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Stat" ColumnName="Stat" />
+                <ScalarProperty Name="UploadedOn" ColumnName="UploadedOn" />
+                <ScalarProperty Name="Document" ColumnName="Document" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

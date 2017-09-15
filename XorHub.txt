@@ -1,0 +1,91 @@
+Requirements: 
+
+	1. Login / Registration
+	2. Upload Assignments from Trainers
+	3. Upload Assignment Solutions from Students
+	4. Verify uploaded assignments
+	5. Students can browse other’s assignments only after verified by trainer
+
+DATABASE: 
+
+	XorHub
+
+	LoginInfo
+	PK Username varchar(10) [min: 4, [a-zA-Z0-9_], max: 10]
+	 	 Passwd   varchar(15) [min: 8, SpecialChar + Alphanumeric, max: 15]
+	 	 Usertype varchar(1)  [(S)tudent, (T)eacher, (A)dmin]
+	 	 Stat		  bit			[null for Student]
+		 Name			varchar(20) [min: 3, [a-zA-Z ], max: 20]
+	FK BatchId  numeric
+
+	Batch
+	PK BatchId numeric
+		 Name    varchar(10)
+
+	Assignment
+	PK AssignmentId numeric
+		 Title				varchar(50)
+		 PostedDate		DateTime
+	FK TeacherId    varchar(10)
+		 Deadline     DateTime
+	FK BatchId      numeric
+		 Document     varchar(100)
+
+	Solution
+	PK SolutionId    numeric
+	FK AssignmentId  numeric
+	FK Username			 varchar(10)
+		 Stat 				 varchar(1)  [(A)pprove, (R)eject, (P)ending]
+		 UploadedOn    DateTime
+		 Document			 varchar(100)
+		 Comment  		 varchar(200)
+
+
+MVC Arch:
+
+	Models:
+		LoginInfo
+		UserInfo
+		Assignment
+		Solution
+		Batch
+
+	IndexController
+		Action: 
+			Login()
+			Register()
+			Logout()
+
+		View:
+			Index
+
+	HomeController
+		Action:
+			Student()
+			Teacher()
+			Post(Assignment assignment) 
+
+		View:
+			Student
+			Teacher
+			
+	AssignmentController
+		Action:
+			Assignment(UserModel user) [View: StudentResponse | TeacherResponse]
+			Sumbit(Solution solution)
+			ViewResponses(Assignment assignmnet)
+			Response(Solution solution)
+			UpdateStatus(bool approve, Solution solution)
+
+		View:
+			StudentResponse
+			TeacherResponse
+			ViewResponses
+			Response
+
+
+
+
+
+-------------------------------
+ <embed src="pdfFiles/interfaces.pdf" width="600" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
