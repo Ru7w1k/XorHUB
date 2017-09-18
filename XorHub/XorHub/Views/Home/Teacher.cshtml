@@ -37,7 +37,7 @@
                             Batch
                         </td>
                         <td>
-                            @Html.DropDownList("BatchId", (IEnumerable<SelectListItem>)ViewData["BatchList"], new { onchange = "getAssignments()", id = "ddlBatchId" })
+                            @Html.DropDownList("BatchId", (IEnumerable<SelectListItem>)ViewData["BatchList"], new { onchange = "getAssignments()", id = "BatchId" })
                         </td>
                     </tr>
 
@@ -46,8 +46,7 @@
                             Deadline
                         </td>
                         <td>
-                            <input type="date" name="deadline" id="deadline"/>
-                            
+                            <input type="date" name="Deadline" id="Deadline"/>
                         </td>
                     </tr>
 
@@ -56,7 +55,7 @@
                             Document
                         </td>
                         <td>
-                            <input type="file" id="inputFile" accept=".pdf"/>
+                            <input type="file" id="Document" name="Document" accept=".pdf"/>
                         </td>
                     </tr>
 

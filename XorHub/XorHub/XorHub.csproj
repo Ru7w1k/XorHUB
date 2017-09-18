@@ -224,6 +224,16 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="XorHubDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XorHubDB.edmx</DependentUpon>
+      <LastGenOutput>XorHubDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="XorHubDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XorHubDB.edmx</DependentUpon>
+      <LastGenOutput>XorHubDB.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -242,16 +252,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="XorHubDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>XorHubDB.edmx</DependentUpon>
-      <LastGenOutput>XorHubDB.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="XorHubDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>XorHubDB.edmx</DependentUpon>
-      <LastGenOutput>XorHubDB.cs</LastGenOutput>
-    </Content>
     <Content Include="Content\test.pdf" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
@@ -264,6 +264,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Index\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Student.cshtml" />
+    <Content Include="Views\Home\Teacher.cshtml" />
+    <Content Include="Views\Assignment\StudentResponse.cshtml" />
     <EntityDeploy Include="XorHubDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>XorHubDB.Designer.cs</LastGenOutput>
@@ -271,12 +277,6 @@
     <Content Include="XorHubDB.edmx.diagram">
       <DependentUpon>XorHubDB.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\Index\Index.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Student.cshtml" />
-    <Content Include="Views\Home\Teacher.cshtml" />
-    <Content Include="Views\Assignment\StudentResponse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

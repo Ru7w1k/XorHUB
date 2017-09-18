@@ -16,7 +16,7 @@ namespace XorHub
     public partial class XorHubEntities : DbContext
     {
         public XorHubEntities()
-            : base("name=XorHubEntities")
+            : base("name=XorHubEntities1")
         {
         }
     

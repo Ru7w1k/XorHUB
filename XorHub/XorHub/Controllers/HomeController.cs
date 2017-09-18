@@ -75,7 +75,7 @@ namespace XorHub.Controllers
             using (XorHubEntities db = new XorHubEntities())
             {
                 var userName = Session["username"].ToString();
-                assignmentList = db.Assignments.Where(a => (a.BatchId == batchId) && (a.TeacherId.Equals(userName))).ToList();
+                assignmentList = db.Assignments.Where(a => (a.BatchId == batchId) && (a.TeacherName.Equals(userName))).ToList();
             }
             return Json(assignmentList, JsonRequestBehavior.AllowGet);
         }

@@ -11,8 +11,7 @@ namespace XorHub
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class LoginInfo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,29 +21,12 @@ namespace XorHub
             this.Solutions = new HashSet<Solution>();
         }
     
-        [Required]
-        [Display(Name = "Username")]
-        [StringLength(10, MinimumLength = 4, ErrorMessage = "Username must be between 4 to 10 characters long")]
-        [RegularExpression(@"^[a-zA-Z]+[a-zA-Z0-9]*$", ErrorMessage = "Username must start with alphabet and it should not contain any special character")]
         public string Username { get; set; }
-
-        [Required]
-        [Display(Name = "Password")]
-        [StringLength(15, MinimumLength = 8, ErrorMessage = "Password must be between 8 to 15 characters long")]
-        [RegularExpression(@"^([a-zA-Z0-9]*[!@#$%^&_*]+[a-zA-Z0-9]*)+$", ErrorMessage = "Password must contain atleast one special character")]
         public string Passwd { get; set; }
-
-        [Required]
-        [Display(Name = "User Type")]
         public string Usertype { get; set; }
-
         public bool Stat { get; set; }
-
-        [Required]
-        [Display(Name = "Name")]
         public string Name { get; set; }
-
-        public Nullable<decimal> BatchId { get; set; }
+        public Nullable<int> BatchId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Assignment> Assignments { get; set; }

@@ -1,7 +1,7 @@
-USE XorHub
+Use XorHub
 
 CREATE TABLE Batch (
-	BatchId numeric primary key,
+	BatchId int identity(1,1) primary key,
 	Name varchar(10) not null
 )
 
@@ -11,32 +11,29 @@ CREATE TABLE LoginInfo (
 	Usertype varchar(1) not null,
 	Stat bit not null,
 	Name varchar(20) not null,
-	BatchId numeric foreign key references Batch(BatchId)
+	BatchId int foreign key references Batch(BatchId)
 )
 
-INSERT INTO Batch VALUES (101, 'Fresh2k17')
-INSERT INTO Batch VALUES (102, 'Fresh2k18')
+INSERT INTO Batch VALUES ( 'Fresh2k17')
+INSERT INTO Batch VALUES ( 'Fresh2k18')
 
 CREATE TABLE Assignment (
-	AssignmentId numeric primary key,
+	AssignmentId int identity(1,1) primary key,
 	Title varchar(50) not null,
 	PostedDate datetime not null,
-	TeacherId varchar(10) foreign key references LoginInfo(Username),
+	TeacherName varchar(10) foreign key references LoginInfo(Username),
 	Deadline datetime not null,
-	BatchId numeric foreign key references Batch(BatchId),
+	BatchId int foreign key references Batch(BatchId),
 	Document varchar(100)
 )
 
 CREATE TABLE Solution (
-	SolutionId numeric primary key,
-	AssignmentId numeric foreign key references Assignment(AssignmentId),
+	SolutionId int identity(1,1) primary key,
+	AssignmentId int foreign key references Assignment(AssignmentId),
 	Username varchar(10) foreign key references LoginInfo(Username),
 	Stat varchar(1) not null,
 	UploadedOn datetime not null,
 	Document varchar(100) not null,
 	Comment varchar(200) not null
 )
-
-
-
 

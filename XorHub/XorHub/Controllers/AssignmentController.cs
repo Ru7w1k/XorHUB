@@ -30,14 +30,8 @@ namespace XorHub.Controllers
         [HttpPost]
         public ActionResult PostQuestion(Assignment assignment)
         {
-            assignment.Deadline = DateTime.ParseExact("2017/02/27 23:00", "yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture);
-
-            //string DateString = assignment.Deadline.ToShortDateString();
-            //IFormatProvider culture = new CultureInfo("en-US", true);
-            //DateTime dateVal = DateTime.ParseExact(DateString, "yyyy-MM-dd", culture);
-            //assignment.Deadline = Convert.ToDateTime(assignment.Deadline, );
-
-
+            assignment.PostedDate = DateTime.Now;
+            assignment.TeacherName = Session["username"].ToString();
 
             using (XorHubEntities db = new XorHubEntities())
             {
@@ -46,8 +40,8 @@ namespace XorHub.Controllers
             }
 
             ViewBag.Message = "Question Successfully uploaded!";
-            
-            return View("Teacher");
+
+            return RedirectToAction("Teacher", "Home");
         }
     }
 }
