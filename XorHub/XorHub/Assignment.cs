@@ -11,7 +11,10 @@ namespace XorHub
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.Data;
+    using System.Data.Sql;
+
     public partial class Assignment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,6 +27,8 @@ namespace XorHub
         public string Title { get; set; }
         public System.DateTime PostedDate { get; set; }
         public string TeacherId { get; set; }
+
+        [Required]
         public System.DateTime Deadline { get; set; }
         public Nullable<decimal> BatchId { get; set; }
         public string Document { get; set; }

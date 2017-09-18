@@ -66,7 +66,17 @@ namespace XorHub.Controllers
                 var userBatchId = db.LoginInfoes.Where(u => u.Username.Equals(userName)).FirstOrDefault().BatchId;
                 assignmentList = db.Assignments.Where(a => a.BatchId == userBatchId).ToList();
             }
+            return Json(assignmentList, JsonRequestBehavior.AllowGet);
+        }
 
+        public JsonResult GetAssignmentsForTeacher(int batchId)
+        {
+            List<Assignment> assignmentList = new List<Assignment>();
+            using (XorHubEntities db = new XorHubEntities())
+            {
+                var userName = Session["username"].ToString();
+                assignmentList = db.Assignments.Where(a => (a.BatchId == batchId) && (a.TeacherId.Equals(userName))).ToList();
+            }
             return Json(assignmentList, JsonRequestBehavior.AllowGet);
         }
 
@@ -93,7 +103,16 @@ namespace XorHub.Controllers
                 });
                 //return RedirectToAction("Index", "Index", 2);
             }
+            using (XorHubEntities db = new XorHubEntities())
+            {
+                List<SelectListItem> list = new List<SelectListItem>();
+                foreach (var item in db.Batches)
+                {
+                    list.Add(new SelectListItem { Text = item.Name, Value = item.BatchId.ToString() });
+                }
 
+                ViewData["BatchList"] = list;
+            }
             return View();
         }
     }

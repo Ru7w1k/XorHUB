@@ -11,10 +11,13 @@ namespace XorHub
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Solution
     {
+        [Required]
         public decimal SolutionId { get; set; }
+
         public Nullable<decimal> AssignmentId { get; set; }
         public string Username { get; set; }
         public string Stat { get; set; }

@@ -65,6 +65,7 @@ namespace XorHub.Controllers
 
             if(model.Usertype.Equals("T"))
             {
+                model.BatchId = null;
                 model.Stat = false;
             }
             else

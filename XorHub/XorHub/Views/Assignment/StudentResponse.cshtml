@@ -1,0 +1,72 @@
+﻿@model Assignment
+
+@{
+    ViewBag.Title = "StudentResponse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    debugger
+    if (true) {
+        
+        document.getElementsByName("ViewResponse").disabled = true;
+    }
+    else
+    {
+        document.getElementsByName("ViewResponse").disabled = false;
+    }
+</script>
+
+<div class="container">
+    <table>
+        <tr>
+            <td>
+                <h2>Title</h2>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h2>Deadline</h2>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+
+    </table>
+
+    <div>
+        <embed src="~/Content/test.pdf" width="100%" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+    </div>
+
+    <div>
+        @using (Html.BeginForm("submit", "Assignment", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td>
+                        <h3>Solution</h3>
+                    </td>
+                    <td>
+                        <input type="file" id="solution" name="solution" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" name="Submit" value="Submit" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input id="btnViewResponse" type="button" name="ViewResponse" value="View Response" onclick="viewResponses()"/>
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>
+
+

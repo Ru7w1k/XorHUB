@@ -17,12 +17,11 @@
             @foreach (Assignment ass in (IEnumerable<Assignment>)ViewBag.Assignments)
             {
                 <a href="#"> 
-            <div> <center> <h3>  @ass.Title <small> @ass.TeacherId </small> </h3> </center>
-
+                <div onclick=""> <center> <h3>  @ass.Title <small> @ass.TeacherId </small> </h3> </center>
                     <p> Deadline :  @ass.Deadline </p>
-                     <p>Attempted By 20%,Submitted by 10%</p>
-                     </div>
-                 </a>
+                    <p>Attempted By 20%,Submitted by 10%</p>
+                </div>
+                </a>
             }
         </div>
     </div>

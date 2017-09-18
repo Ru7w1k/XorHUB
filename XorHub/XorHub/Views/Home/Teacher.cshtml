@@ -1,7 +1,100 @@
-﻿
+﻿@model Assignment
+
 @{
     ViewBag.Title = "Student";
 }
 
-<h2>Student</h2>
+<h2>Teacher</h2>
 
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-5">
+            <h3>Browse Responses</h3>
+
+            @Html.DropDownList("BatchId", (IEnumerable<SelectListItem>)ViewData["BatchList"], new { onchange = "getAssignments()", id = "ddlBatchId"})
+
+            <div id="Assignments">
+
+            </div>
+        </div>
+        <div class="col-md-7">
+            <h3>Post New Question</h3>
+            @using (Html.BeginForm("PostQuestion", "Assignment", FormMethod.Post))
+            {
+                <table>
+                    <tr>
+                        <td>
+                            Title
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(a => a.Title)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Batch
+                        </td>
+                        <td>
+                            @Html.DropDownList("BatchId", (IEnumerable<SelectListItem>)ViewData["BatchList"], new { onchange = "getAssignments()", id = "ddlBatchId" })
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Deadline
+                        </td>
+                        <td>
+                            <input type="date" name="deadline" id="deadline"/>
+                            
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Document
+                        </td>
+                        <td>
+                            <input type="file" id="inputFile" accept=".pdf"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" name="Post" />
+                        </td>
+                    </tr>
+                </table>
+
+                <div>
+                    @ViewBag.Message
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
+
+    //$(function () {
+    //    $('#datetimepicker1').datetimepicker();
+    //});
+
+    function getAssignments() {
+        $.get("GetAssignmentsForTeacher", { batchId: $('#ddlBatchId').val() }, PrintAssingments, 'JSON');
+    }
+
+    function PrintAssingments(data) {
+        $('#Assignments').empty();
+        for (var i = 0 ; i < data.length ; i++) {
+            var row = "<a href=\"#\"> <div> <center> <h3> " + data[i].Title + "<small>" + data[i].TeacherId + "</small> </h3> </center><p> Deadline : " + data[i].Deadline + "</p> <p>Attempted By 20%,Submitted by 10%</p> </div> </a>";
+            $("#Assignments").append(row);
+        }
+    }
+
+</script>
