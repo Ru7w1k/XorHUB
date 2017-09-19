@@ -55,7 +55,7 @@
                             Document
                         </td>
                         <td>
-                            <input type="file" id="Document" name="Document" accept=".pdf"/>
+                            <input type="file" id="Document" name="Document" accept=".pdf" onchange="uploadFile()" />
                         </td>
                     </tr>
 
@@ -79,6 +79,13 @@
     $(document).ready(function () {
         $('#datetimepicker1').datetimepicker();
     });
+
+    function uploadFile() {
+        var file = document.getElementById("Document").value;
+
+        $.post("/Assignment/UploadFile", {file : file}, null);
+
+    }
 
     //$(function () {
     //    $('#datetimepicker1').datetimepicker();

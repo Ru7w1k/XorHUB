@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace XorHub.Controllers
 {
@@ -42,6 +43,14 @@ namespace XorHub.Controllers
             ViewBag.Message = "Question Successfully uploaded!";
 
             return RedirectToAction("Teacher", "Home");
+        }
+        
+        [HttpPost]
+        public void UploadFile(string file)
+        {
+            var x = file;
+            
+
         }
     }
 }
