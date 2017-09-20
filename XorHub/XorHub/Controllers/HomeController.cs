@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,7 +10,7 @@ namespace XorHub.Controllers
     public class HomeController : Controller
     {
 
-        public ActionResult Student()
+        public ActionResult Student(int? id)
         {
             if (Session["username"] == null || Session["usertype"] == null)
             {
@@ -44,6 +45,13 @@ namespace XorHub.Controllers
                     break;
             }
 
+            switch (id)
+            {
+                case 1:
+                    ViewBag.Message = "Assignment Submitted Successfully!";
+                    break;
+            }
+
             List<Assignment> assignmentList = new List<Assignment>();
             using (XorHubEntities db = new XorHubEntities())
             {
@@ -72,19 +80,12 @@ namespace XorHub.Controllers
         public JsonResult GetAssignmentsForTeacher(int batchId)
         {
             List<Assignment> assignmentList = new List<Assignment>();
-            assignmentList.AddRange(
-                new Assignment[] {
-                    new Assignment() { Title = "R"},
-                    new Assignment() { Title = "AR"},
-                    new Assignment() { Title = "RE"},
-                    new Assignment() { Title = "QR"},
-                    
-                });
-            //using (XorHubEntities db = new XorHubEntities())
-            //{
-            //    var userName = Session["username"].ToString();
-            //    assignmentList = db.Assignments.Where(a => (a.BatchId == batchId) && (a.TeacherName.Equals(userName))).ToList();
-            //}
+
+            using (XorHubEntities db = new XorHubEntities())
+            {
+                var userName = Session["username"].ToString();
+                assignmentList = db.Assignments.Where(a => (a.BatchId == batchId) && (a.TeacherName.Equals(userName))).ToList();
+            }
             return Json(assignmentList, JsonRequestBehavior.AllowGet);
         }
 
@@ -123,5 +124,7 @@ namespace XorHub.Controllers
             }
             return View();
         }
+
+
     }
 }

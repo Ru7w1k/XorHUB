@@ -1,4 +1,4 @@
-﻿@model Assignment
+﻿@model XorHub.Models.AssignmentSolutionModel
 
 @{
     ViewBag.Title = "StudentResponse";
@@ -6,7 +6,7 @@
 }
 
 <script type="text/javascript">
-    debugger
+
     if (true) {
         
         document.getElementsByName("ViewResponse").disabled = true;
@@ -15,16 +15,18 @@
     {
         document.getElementsByName("ViewResponse").disabled = false;
     }
+
 </script>
 
 <div class="container">
+    @Html.HiddenFor(u => u.Assignment.AssignmentId)
     <table>
         <tr>
             <td>
                 <h2>Title</h2>
             </td>
             <td>
-
+                @Model.Assignment.Title
             </td>
         </tr>
         <tr>
@@ -32,26 +34,27 @@
                 <h2>Deadline</h2>
             </td>
             <td>
-
+                @Model.Assignment.Deadline
             </td>
         </tr>
 
     </table>
 
     <div>
-        <embed src="~/Content/test.pdf" width="100%" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+        <embed src=@Url.Content(String.Format("{0}", ViewBag.filePath)) width="100%" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
     </div>
 
     <div>
-        @using (Html.BeginForm("submit", "Assignment", FormMethod.Post))
+        @using (Html.BeginForm("submit", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
+            @Html.HiddenFor(u => u.Assignment.AssignmentId)
             <table>
                 <tr>
                     <td>
                         <h3>Solution</h3>
                     </td>
                     <td>
-                        <input type="file" id="solution" name="solution" />
+                        <input type="file" id="solutionDoc" name="solutionDoc" accept=".pdf" />
                     </td>
                 </tr>
                 <tr>

@@ -9,6 +9,9 @@
 
 <div class="container">
     <div class="row">
+        @ViewBag.Message
+    </div>
+    <div class="row">
         <div class="col-md-3" >
              My Submissions
         </div>
@@ -16,12 +19,11 @@
         <div class="col-md-8" id="divAssignments">
             @foreach (Assignment ass in (IEnumerable<Assignment>)ViewBag.Assignments)
             {
-                <a href="#"> 
-                <div onclick=""> <center> <h3>  @ass.Title <small> @ass.TeacherId </small> </h3> </center>
+                <a href=@Url.Content(string.Format("/Assignment/StudentResponse/{0}", ass.AssignmentId))>Attempt</a> 
+                <div> <center> <h3>  @ass.Title <small> @ass.TeacherName </small> </h3> </center>
                     <p> Deadline :  @ass.Deadline </p>
                     <p>Attempted By 20%,Submitted by 10%</p>
                 </div>
-                </a>
             }
         </div>
     </div>

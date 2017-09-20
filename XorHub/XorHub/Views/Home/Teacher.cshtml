@@ -5,7 +5,7 @@
 }
 
 <h2>Teacher</h2>
-
+<script src="~/Scripts/jquery-3.2.1.js"></script>
 <div class="container">
 
     <div class="row">
@@ -15,12 +15,14 @@
             @Html.DropDownList("BatchId", (IEnumerable<SelectListItem>)ViewData["BatchList"], new { onchange = "getAssignments()", id = "ddlBatchId"})
 
             <div id="Assignments">
-
+                Loading Assignments..
             </div>
         </div>
         <div class="col-md-7">
             <h3>Post New Question</h3>
-            @using (Html.BeginForm("PostQuestion", "Assignment", FormMethod.Post))
+
+
+            @using (Html.BeginForm("PostQuestion", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <table>
                     <tr>
@@ -28,7 +30,7 @@
                             Title
                         </td>
                         <td>
-                            @Html.TextBoxFor(a => a.Title)
+                            @Html.TextBoxFor(a => a.Title )
                         </td>
                     </tr>
 
@@ -55,7 +57,7 @@
                             Document
                         </td>
                         <td>
-                            <input type="file" id="Document" name="Document" accept=".pdf" onchange="uploadFile()" />
+                            <input type="file" id="QueFile" name="QueFile" accept=".pdf" />
                         </td>
                     </tr>
 
@@ -76,9 +78,9 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
-        $('#datetimepicker1').datetimepicker();
-    });
+    //$(document).ready(function () {
+    //    $('#datetimepicker1').datetimepicker();
+    //});
 
     function uploadFile() {
         var file = document.getElementById("Document").value;
