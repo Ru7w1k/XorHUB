@@ -182,6 +182,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AssignmentSolutionModel.cs" />
+    <Compile Include="Models\HttpParamActionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solution.cs">
       <DependentUpon>XorHubDB.tt</DependentUpon>
@@ -278,6 +279,8 @@
     <Content Include="XorHubDB.edmx.diagram">
       <DependentUpon>XorHubDB.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Assignment\TeacherResponse.cshtml" />
+    <Content Include="Views\Assignment\Response.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

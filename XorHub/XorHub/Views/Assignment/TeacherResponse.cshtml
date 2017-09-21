@@ -1,0 +1,84 @@
+﻿@model XorHub.Models.AssignmentSolutionModel
+
+@{
+    ViewBag.Title = "TeacherResponse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+
+</script>
+
+<div class="container">
+    <table>
+        <tr>
+            <td>
+                <h2>Title</h2>
+            </td>
+            <td>
+                @Model.Assignment.Title
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h2>Batch</h2>
+            </td>
+            <td>
+                @Model.Assignment.BatchId
+            </td>
+        </tr>
+
+    </table>
+
+    <div>
+        <embed src=@Url.Content(String.Format("{0}", ViewBag.filePath)) width="100%" height="400" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+    </div>
+
+    <div>
+        @using (Html.BeginForm("submit", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(u => u.Assignment.AssignmentId)
+
+            <div>
+                <h3>Responses</h3>
+                @foreach (Solution sol in (IEnumerable<Solution>)ViewBag.solutions)
+                {
+                    <div class="row">
+                        <a href=@Url.Content(String.Format("/Assignment/Response/{0}", sol.SolutionId))>
+                            <div class="col-md-4">
+                                <h4><strong> @sol.Username</strong> </h4>
+                            </div>
+                            <div class="col-md-2">
+                                <small> @sol.UploadedOn</small>
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-4">
+                                Status :
+                                @switch (sol.Stat)
+                                {
+                                    case "P":
+                                        @Html.Label("Pending")
+                                        break;
+
+                                    case "A":
+                                        @Html.Label("Approved")
+                                        break;
+
+                                    case "R":
+                                        @Html.Label("Rejected")
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+</div>
+
+

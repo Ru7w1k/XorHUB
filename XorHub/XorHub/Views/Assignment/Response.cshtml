@@ -1,0 +1,35 @@
+﻿@model Solution
+
+@{
+    ViewBag.Title = "Response";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Response</h2>
+
+<div class="container">
+    <div class="row">
+        Title : @Html.Label(Model.Assignment.Title)
+        <br />
+        Response :
+    </div>
+
+    <div class="row">
+        <embed src=@Url.Content(String.Format("~/Database/Solutions/{0}/{1}.pdf", Model.Username, Model.AssignmentId)) width="100%" height="400" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+    </div>
+
+    <div class="row">
+        @using (Html.BeginForm("Action", "Assignment", FormMethod.Post))
+        {
+            @Html.HiddenFor(s => s.SolutionId)
+            @Html.HiddenFor(s => s.AssignmentId)
+
+            @Html.LabelFor(s => s.Comment)
+            @Html.TextAreaFor(s => s.Comment)
+
+            <input type="submit" name="Approve" value="Approve" />
+            <input type="submit" name="Reject" value="Reject" />
+        }
+    </div>
+</div>
+

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using XorHub.Models;
+using System.Data.Entity.Validation;
 
 namespace XorHub.Controllers
 {
@@ -32,6 +33,22 @@ namespace XorHub.Controllers
             ViewBag.filePath = "~/Database/Questions/" + id + ".pdf";
             ViewBag.state = false;
             return View(asModel);
+        }
+
+        public ActionResult TeacherResponse(int id)
+        {
+            AssignmentSolutionModel asModel = new AssignmentSolutionModel();
+            List<Solution> listSolutions = new List<Solution>();
+            using (XorHubEntities db = new XorHubEntities())
+            {
+                asModel.Assignment = db.Assignments.Where(a=>a.AssignmentId == id).FirstOrDefault();
+                listSolutions = db.Solutions.Where(s => s.AssignmentId == id).ToList();
+            }
+
+            ViewBag.filePath = "~/Database/Questions/" + asModel.Assignment.AssignmentId + ".pdf";
+            ViewBag.solutions = listSolutions;
+
+            return View("TeacherResponse", asModel);
         }
 
         [HttpPost]
@@ -62,14 +79,77 @@ namespace XorHub.Controllers
             }
 
             solutionDoc.SaveAs(Path.Combine(Server.MapPath("~/Database/Solutions/" + Session["username"].ToString() + "/"), asModel.Assignment.AssignmentId + ".pdf"));
-            
-            return RedirectToRoute(new
+
+            Solution soln = new Solution() {
+                AssignmentId = asModel.Assignment.AssignmentId,
+                Username = Session["username"].ToString(),
+                Stat = "P",
+                UploadedOn = DateTime.Now,
+                Document = asModel.Assignment.AssignmentId + ".pdf",
+                Comment = ""
+            };
+            using (XorHubEntities db = new XorHubEntities())
+            {
+                try
                 {
-                    Controller = "Home",
-                    Action = "Student",
-                    id = 3
+                    db.Solutions.Add(soln);
+                    db.SaveChanges();
                 }
+                catch (DbEntityValidationException e)
+                {
+
+                }
+            }
+
+            return RedirectToRoute(new
+            {
+                Controller = "Home",
+                Action = "Student",
+                id = 3
+            }
             );
         }
+
+        public new ActionResult Response(int id)
+        {
+            Solution sol = new Solution();
+            using (XorHubEntities db = new XorHubEntities())
+            {
+                sol = db.Solutions.Where(s => s.SolutionId == id).FirstOrDefault();
+                sol.Assignment = db.Assignments.Where(a => a.AssignmentId == sol.AssignmentId).FirstOrDefault();
+            }
+            return View(sol);
+        }
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Approve(Solution sol)
+        {
+            using (XorHubEntities db = new XorHubEntities())
+            {
+                var soln = db.Solutions.Where(s => s.SolutionId == sol.SolutionId).FirstOrDefault();
+                soln.Stat = "A";
+                soln.Comment = sol.Comment;
+                db.SaveChanges();
+            }
+            return RedirectToAction("TeacherResponse", new { id = sol.AssignmentId });
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Reject(Solution sol)
+        {
+            using (XorHubEntities db = new XorHubEntities())
+            {
+                var soln = db.Solutions.Where(s => s.SolutionId == sol.SolutionId).FirstOrDefault();
+                soln.Stat = "R";
+                soln.Comment = sol.Comment; db.SaveChanges();
+            }
+
+            return RedirectToAction("TeacherResponse", new { id = sol.AssignmentId });
+        }
+
+
     }
 }

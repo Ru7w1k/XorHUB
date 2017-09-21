@@ -99,6 +99,7 @@ namespace XorHub.Controllers
 
             Session["username"] = null;
             Session["usertype"] = null;
+            ViewBag.Message = "Logged Out Successfully";
             return View("Index");
         }
 

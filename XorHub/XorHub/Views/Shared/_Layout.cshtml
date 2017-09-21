@@ -28,7 +28,11 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav" style="float:right">
-                    <li><a>@Session["username"]</a></li>
+                    @if (Session["username"] != null)
+                    {
+                        <li><a>@Session["username"]</a></li>
+                        <li><a href="/Index/Logout">Logout</a></li>
+                    }
                 </ul>
 
             </div>
