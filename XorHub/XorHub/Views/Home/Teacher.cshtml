@@ -100,9 +100,21 @@
     function PrintAssingments(data) {
         $('#Assignments').empty();
         for (var i = 0 ; i < data.length ; i++) {
-            var row = "<a href=\"#\"> <div> <center> <h3> " + data[i].Title + "<small>" + data[i].TeacherName + "</small> </h3> </center><p> Deadline : " + data[i].Deadline + "</p> <p>Attempted By 20%,Submitted by 10%</p> </div> </a>";
+            var row = "<a href=\"#\"> <div> <center> <h3> " + data[i].Title + "<small>" + data[i].TeacherName + "</small> </h3> </center><p> Deadline : " + formatDate(Date(data[i].Deadline)) + "</p> <p>Attempted By 20%,Submitted by 10%</p> </div> </a>";
             $("#Assignments").append(row);
         }
+    }
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
     }
 
 </script>
