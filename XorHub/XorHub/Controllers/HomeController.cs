@@ -80,13 +80,25 @@ namespace XorHub.Controllers
         public JsonResult GetAssignmentsForTeacher(int batchId)
         {
             List<Assignment> assignmentList = new List<Assignment>();
+            List<Assignment> finalList = new List<Assignment>();
 
             using (XorHubEntities db = new XorHubEntities())
             {
                 var userName = Session["username"].ToString();
                 assignmentList = db.Assignments.Where(a => (a.BatchId == batchId) && (a.TeacherName.Equals(userName))).ToList();
             }
-            return Json(assignmentList, JsonRequestBehavior.AllowGet);
+
+            foreach (var item in assignmentList)
+            {
+                finalList.Add(new Assignment {
+                    AssignmentId = item.AssignmentId,
+                    Title = item.Title,
+                    TeacherName = item.TeacherName,
+                    Deadline = item.Deadline
+                });
+            }
+
+            return Json(finalList, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Teacher()

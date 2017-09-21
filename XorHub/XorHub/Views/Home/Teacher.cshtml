@@ -100,7 +100,7 @@
     function PrintAssingments(data) {
         $('#Assignments').empty();
         for (var i = 0 ; i < data.length ; i++) {
-            var row = "<a href=\"#\"> <div> <center> <h3> " + data[i].Title + "<small>" + data[i].TeacherId + "</small> </h3> </center><p> Deadline : " + data[i].Deadline + "</p> <p>Attempted By 20%,Submitted by 10%</p> </div> </a>";
+            var row = "<a href=\"#\"> <div> <center> <h3> " + data[i].Title + "<small>" + data[i].TeacherName + "</small> </h3> </center><p> Deadline : " + data[i].Deadline + "</p> <p>Attempted By 20%,Submitted by 10%</p> </div> </a>";
             $("#Assignments").append(row);
         }
     }
