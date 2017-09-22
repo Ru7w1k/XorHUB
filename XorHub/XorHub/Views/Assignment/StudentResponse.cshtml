@@ -19,7 +19,6 @@
 </script>
 
 <div class="container">
-    @Html.HiddenFor(u => u.Assignment.AssignmentId)
     <table>
         <tr>
             <td>
@@ -64,7 +63,9 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input id="btnViewResponse" type="button" name="ViewResponse" value="View Response" onclick="viewResponses()"/>
+                        @if (Model.Solution.Stat.Equals("A")) {
+                            <a href="/Assignment/ViewResponse/@Model.Assignment.AssignmentId" > View Responses</a>
+                        }
                     </td>
                 </tr>
             </table>

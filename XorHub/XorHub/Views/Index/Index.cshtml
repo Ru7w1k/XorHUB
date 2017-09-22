@@ -74,7 +74,7 @@ div.tab button.active {
                     @Html.LabelFor(u => u.Username) 
                 </td>
                 <td>
-                    @Html.TextBoxFor(u => u.Username) 
+                    @Html.TextBoxFor(u => u.Username, new { pattern = @"^[a-zA-Z_]{4,10}$", title = "Username must contain atleast 4 characters!" }) 
                 </td>
             </tr>
             <tr>
@@ -88,7 +88,7 @@ div.tab button.active {
                     @Html.LabelFor(u => u.Passwd)
                 </td>
                 <td>
-                    @Html.PasswordFor(u => u.Passwd)
+                    @Html.PasswordFor(u => u.Passwd, new { pattern = @"^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$", title = "Password must contain 8 characters!"})
                 </td>
             </tr>
             <tr>
@@ -118,7 +118,7 @@ div.tab button.active {
                             @Html.LabelFor(u => u.Name)
                         </td>
                         <td>
-                            @Html.TextBoxFor(u => u.Name)
+                            @Html.TextBoxFor(u => u.Name, new { required = "required", minlength = 3, maxlength = 20 })
                         </td>
                     </tr>
                     <tr>
@@ -133,7 +133,7 @@ div.tab button.active {
                             
                         </td>
                         <td>
-                            @Html.TextBoxFor(u => u.Username)
+                            @Html.TextBoxFor(u => u.Username, new { pattern = @"^[a-zA-Z_]{4,10}$" })
                         </td>
                     </tr>
                     <tr>
@@ -148,7 +148,7 @@ div.tab button.active {
                             
                         </td>
                         <td>
-                            @Html.PasswordFor(u => u.Passwd)
+                            @Html.PasswordFor(u => u.Passwd, new { pattern = @"^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$" })
                         </td>
                     </tr>
                     <tr>

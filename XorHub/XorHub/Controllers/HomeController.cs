@@ -10,6 +10,11 @@ namespace XorHub.Controllers
     public class HomeController : Controller
     {
 
+        public ActionResult Admin()
+        {
+            return View();
+        }
+
         public ActionResult Student(int? id)
         {
             if (Session["username"] == null || Session["usertype"] == null)
@@ -135,6 +140,31 @@ namespace XorHub.Controllers
                 ViewData["BatchList"] = list;
             }
             return View();
+        }
+        
+
+        public JsonResult GetTeacherRequests()
+        {
+            List<LoginInfo> listTeachers = new List<LoginInfo>();
+
+            using (XorHubEntities db = new XorHubEntities())
+            {
+                foreach(var item in  db.LoginInfoes.Where(l => l.Usertype.Equals("T") && !l.Stat).ToList())
+                {
+                    listTeachers.Add(new LoginInfo { Name = item.Name, Username = item.Username });
+                }
+            }
+
+            return Json(listTeachers, JsonRequestBehavior.AllowGet);
+        }
+
+        public void ApproveTeacher(string username)
+        {
+            using (XorHubEntities db = new XorHubEntities())
+            {
+                db.LoginInfoes.Where(l => l.Username.Equals(username)).FirstOrDefault().Stat = true;
+                db.SaveChanges();
+            }
         }
 
 

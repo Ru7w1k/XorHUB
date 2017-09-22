@@ -119,6 +119,7 @@ namespace XorHub.Controllers
 
             if (ModelState["Username"].Errors.Count > 0 || ModelState["Passwd"].Errors.Count > 0)
             {
+                
                 return View("Index", model);
             }
 
@@ -128,6 +129,7 @@ namespace XorHub.Controllers
                 if(model == null)
                 {
                     ViewBag.Message = "Invalid Username or password!!";
+                    ModelState.Clear();
                     return View("Index");
                 }
             }

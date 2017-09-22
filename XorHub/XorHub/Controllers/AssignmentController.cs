@@ -16,7 +16,7 @@ namespace XorHub.Controllers
         public ActionResult StudentResponse(int id)
         {
             AssignmentSolutionModel asModel = new AssignmentSolutionModel();
-            asModel.Solution = new Solution();
+            asModel.Solution = new Solution() { Stat = "P"};
 
             using (XorHubEntities db = new XorHubEntities())
             {
@@ -28,10 +28,32 @@ namespace XorHub.Controllers
 
                 asModel.Assignment = db.Assignments.Where(a => a.AssignmentId == id).FirstOrDefault();
 
+                var sol = db.Solutions.Where(s => s.AssignmentId == id && s.Stat.Equals("A")).FirstOrDefault();
+                if (sol != null)
+                {
+                    asModel.Solution = sol;
+                }
+
                 ViewData["BatchList"] = list;
             }
             ViewBag.filePath = "~/Database/Questions/" + id + ".pdf";
             ViewBag.state = false;
+
+            return View(asModel);
+        }
+
+        public ActionResult ViewResponse(int id)
+        {
+            AssignmentSolutionModel asModel = new AssignmentSolutionModel();
+            List<Solution> listSolutions = new List<Solution>();
+            using (XorHubEntities db = new XorHubEntities())
+            {
+                asModel.Assignment = db.Assignments.Where(a => a.AssignmentId == id).FirstOrDefault();
+                listSolutions = db.Solutions.Where(s => s.AssignmentId == id && s.Stat.Equals("A")).ToList();
+            }
+
+            ViewBag.solutions = listSolutions;
+
             return View(asModel);
         }
 
@@ -118,6 +140,12 @@ namespace XorHub.Controllers
                 sol = db.Solutions.Where(s => s.SolutionId == id).FirstOrDefault();
                 sol.Assignment = db.Assignments.Where(a => a.AssignmentId == sol.AssignmentId).FirstOrDefault();
             }
+
+            if (Session["usertype"].ToString().Equals("T"))
+                ViewBag.IsDisplay = true;
+            else
+                ViewBag.IsDisplay = false;
+
             return View(sol);
         }
 

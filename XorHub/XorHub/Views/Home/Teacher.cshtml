@@ -78,21 +78,11 @@
 
 <script type="text/javascript">
 
-    //$(document).ready(function () {
-    //    $('#datetimepicker1').datetimepicker();
-    //});
-
     function uploadFile() {
         var file = document.getElementById("Document").value;
-
         $.post("/Assignment/UploadFile", {file : file}, null);
-
     }
-
-    //$(function () {
-    //    $('#datetimepicker1').datetimepicker();
-    //});
-
+    
     function getAssignments() {
         $.get("GetAssignmentsForTeacher", { batchId: $('#ddlBatchId').val() }, PrintAssingments, 'JSON');
     }

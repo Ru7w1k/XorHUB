@@ -18,6 +18,7 @@
         <embed src=@Url.Content(String.Format("~/Database/Solutions/{0}/{1}.pdf", Model.Username, Model.AssignmentId)) width="100%" height="400" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
     </div>
 
+    @if (ViewBag.IsDisplay) {
     <div class="row">
         @using (Html.BeginForm("Action", "Assignment", FormMethod.Post))
         {
@@ -31,5 +32,6 @@
             <input type="submit" name="Reject" value="Reject" />
         }
     </div>
+    }
 </div>
 

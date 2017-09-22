@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Admin</h2>
+
+<div class="container">
+    <div class="row">
+        <div id="requests">
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $.get("GetTeacherRequests", null, PrintTeacherList);
+ 
+    function PrintTeacherList(data) {
+        $('#requests').empty();
+        for (var i = 0 ; i < data.length ; i++) {
+            var row = "<div> <center> <h3> " + data[i].Name + "<small>" + data[i].Username + "</small> </h3> </center> <input type=\"button\" value=\"Accept\" name=\"Accept\" onclick=\"approveTeacher('"  + data[i].Username + "')\"> </div> ";
+            $("#requests").append(row);
+        }
+    }
+
+    function approveTeacher(username) {
+        $.post("ApproveTeacher", { username : username}, alert("Teacher Approved!"), 'JSON');
+    }
+</script>
