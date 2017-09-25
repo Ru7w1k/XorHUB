@@ -1,4 +1,9 @@
-﻿body {
+﻿* {
+    font-family: 'Patua One', cursive;
+    letter-spacing: 1px;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }

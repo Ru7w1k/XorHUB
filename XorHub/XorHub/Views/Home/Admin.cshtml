@@ -3,13 +3,14 @@
     ViewBag.Title = "Admin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Admin</h2>
-
+<br />
+<br />
 <div class="container">
     <div class="row">
         <div id="requests">
-
+            <div class="well">
+                No Pending Request!
+            </div>
         </div>
     </div>
 </div>
@@ -19,7 +20,9 @@
     $.get("GetTeacherRequests", null, PrintTeacherList);
  
     function PrintTeacherList(data) {
-        $('#requests').empty();
+        if (data.length != 0) {
+            $('#requests').empty();
+        }
         for (var i = 0 ; i < data.length ; i++) {
             var row = "<div> <center> <h3> " + data[i].Name + "<small>" + data[i].Username + "</small> </h3> </center> <input type=\"button\" value=\"Accept\" name=\"Accept\" onclick=\"approveTeacher('"  + data[i].Username + "')\"> </div> ";
             $("#requests").append(row);

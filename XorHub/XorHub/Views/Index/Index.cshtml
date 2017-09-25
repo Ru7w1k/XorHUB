@@ -7,202 +7,178 @@
 
 <head>
     <style>
-body {font-family: "Lato", sans-serif;}
+        /*Style the tab*/
+        * {
+            font-family: 'Patua One', cursive;
+            letter-spacing: 1px;
+        }
+        div.tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            width: 400px;
+        }
 
-/* Style the tab */
-div.tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-    width:400px;
-    
-}
+        label {
+            font-size: 16px;
+        }
 
-/* Style the buttons inside the tab */
-div.tab button {
-    background-color: inherit;
-    float: center;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
-}
+        input, select {
+            font-size: 15px;
+            letter-spacing: 0px;
+        }
 
-/* Change background color of buttons on hover */
-div.tab button:hover {
-    background-color: #ddd;
-}
+            /*Style the buttons inside the tab*/
+            div.tab button {
+                background-color: inherit;
+                float: center;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                padding: 14px 16px;
+                transition: 0.3s;
+                font-size: 17px;
+            }
 
-/* Create an active/current tablink class */
-div.tab button.active {
-    background-color: #ccc;
-}
+                /*Change background color of buttons on hover*/
+                div.tab button:hover {
+                    background-color: #ddd;
+                }
 
-/* Style the tab content */
-.tabcontent {
-    display: none;
-    padding: 6px 12px;
-    -webkit-animation: fadeEffect 1s;
-    animation: fadeEffect 1s;
-}
+                /*Create an active/current tablink class*/
+                div.tab button.active {
+                    background-color: #0c84e4;
+                    color: white;
+                }
 
+        /*Style the tab content*/
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            -webkit-animation: fadeEffect 5s;
+            animation: fadeEffect 5s;
+        }
     </style>
 </head>
 <body>
     <center>
-        <h3>Welcome to XorHub</h3>
-
+        <br /><br />
         <div class="tab">
-            <div class="tab">
+            <div class="tab nav nav-tabs">
                 <button class="tablinks" onclick="openTab(event, 'Login')" id="defaultOpen">Login</button>
                 <button class="tablinks" onclick="openTab(event, 'Signup')">Signup</button>
             </div>
 
-            <div>
-                @ViewBag.Message
-            </div>
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-dismissible alert-warning">
+                    @ViewBag.Message
+                </div>
+            }
 
-            <div id="Login" class="tabcontent">
-    @using (Html.BeginForm("Login", "Index", FormMethod.Post))
-    {
-        <table cellpadding="10">
+            <div class="row">
+                <div id="Login" class="tabcontent">
 
-            <tr>
-                <td>
-                    @Html.LabelFor(u => u.Username) 
-                </td>
-                <td>
-                    @Html.TextBoxFor(u => u.Username, new { pattern = @"^[a-zA-Z_]{4,10}$", title = "Username must contain atleast 4 characters!" }) 
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    @Html.ValidationMessageFor(u => u.Username)
-                </td>                        
-            </tr>
-            <tr>
-                <td>
-                    @Html.LabelFor(u => u.Passwd)
-                </td>
-                <td>
-                    @Html.PasswordFor(u => u.Passwd, new { pattern = @"^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$", title = "Password must contain 8 characters!"})
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    @Html.ValidationMessageFor(u => u.Passwd)
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <input type="submit" value="Login" />
-                </td>
-            </tr>
-                </table>
+                    @using (Html.BeginForm("Login", "Index", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                    <div class="form-group label-floating">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <label class="control-label" for="username">Username</label>
+                            @Html.TextBoxFor(u => u.Username, new { pattern = @"^[a-zA-Z0-9_]{4,10}$", title = "Username must contain atleast 4 characters!", @class = "form-control", id = "username", placeholder = "Enter username", required = "required" })
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                    <div class="form-group label-floating">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <label class="control-label" for="Passwd">Password</label>
+                            @Html.PasswordFor(u => u.Passwd, new { pattern = @"^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$", title = "Password must contain 8 characters!", @class = "form-control", id = "Passwd", placeholder = "Enter Password" ,required = "required" })
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="submit" class="btn btn-primary" value="Login" />
+                        </div>
+                    </div>
                     }
-    </div>
+                </div>
+            </div>
 
             <div id="Signup" class="tabcontent">
-                <br />
-@using (Html.BeginForm("Register", "Index", FormMethod.Post))
-{
-
-                <table cellpadding="10">
-
-                    <tr>
-                        <td>
-                            @Html.LabelFor(u => u.Name)
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(u => u.Name, new { required = "required", minlength = 3, maxlength = 20 })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            @Html.ValidationMessageFor(u => u.Name)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            @Html.LabelFor(u => u.Username)
-                            
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(u => u.Username, new { pattern = @"^[a-zA-Z_]{4,10}$" })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            @Html.ValidationMessageFor(u => u.Username)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            @Html.LabelFor(u => u.Passwd)
-                            
-                        </td>
-                        <td>
-                            @Html.PasswordFor(u => u.Passwd, new { pattern = @"^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$" })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            @Html.ValidationMessageFor(u => u.Passwd)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            @Html.LabelFor(u => u.Usertype)
-                        </td>
-                        <td>
+                @using (Html.BeginForm("Register", "Index", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="form-group label-floating">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <label class="control-label" for="name">Name</label>
+                            @Html.TextBoxFor(u => u.Name, new { required = "required", minlength = 3, maxlength = 20, @class = "form-control", id = "Name", placeholder = "Enter Name"})
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                    <div class="form-group label-floating">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <label class="control-label" for="Username">Username</label>
+                            @Html.TextBoxFor(u => u.Username, new { pattern = @"^[a-zA-Z_]{4,10}$", @class = "form-control", id = "username", placeholder = "Enter Username", required = "required" })
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                    <div class="form-group label-floating">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <label class="control-label" for="Passwd">Password</label>
+                            @Html.PasswordFor(u => u.Passwd, new { pattern = @"^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$", @class = "form-control", id = "Passwd", placeholder = "Enter Password", required = "required" })
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                    <div class="form-group label-floating">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <label class="control-label" for="UserType">User Type</label>
                             @Html.DropDownList("UserType", new SelectListItem[]
-                                {
-                                    new SelectListItem() { Text = "Student", Value = "S"},
-                                    new SelectListItem() { Text = "Teacher", Value = "T"}
-                                })
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            @Html.Label("Batch")
-                        </td>
-                        <td>
-                            @Html.DropDownList("BatchId", (IEnumerable<SelectListItem>)ViewData["BatchList"])
-                        </td>
-                        <td></td>
-                    </tr>
-                </table>
+            {
+                new SelectListItem() { Text = "Student", Value = "S"},
+                new SelectListItem() { Text = "Teacher", Value = "T"}
+            }, new { @class = "form-control", id = "UserType", required = "required" })
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                    <div class="form-group label-floating">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <label class="control-label" for="Batch">Batch</label>
+                            @Html.DropDownList("BatchId", (IEnumerable<SelectListItem>)ViewData["BatchList"], new { @class = "form-control", id = "Batch", required = "required" })
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
 
-                <br />
-                <input type="submit" value="Signup" />
-}
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="submit" class="btn btn-primary" value="Sign Up" />
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-</center>
+
+    </center>
     <script>
-function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-document.getElementById("defaultOpen").click();
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        document.getElementById("defaultOpen").click();
     </script>
 
 </body>

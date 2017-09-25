@@ -2,17 +2,19 @@
 
 @{
     ViewBag.Title = "Teacher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Teacher</h2>
-<script src="~/Scripts/jquery-3.2.1.js"></script>
+<br />
+<br />
+
 <div class="container">
 
     <div class="row">
         <div class="col-md-5">
             <h3>Browse Responses</h3>
 
-            @Html.DropDownList("BatchId", (IEnumerable<SelectListItem>)ViewData["BatchList"], new { onchange = "getAssignments()", id = "ddlBatchId"})
+            @Html.DropDownList("BatchId", (IEnumerable<SelectListItem>)ViewData["BatchList"], new { onchange = "getAssignments()", id = "ddlBatchId", @class = "form-control" })
 
             <div id="Assignments">
                 Loading Assignments..
@@ -22,56 +24,53 @@
             <h3>Post New Question</h3>
 
 
-            @using (Html.BeginForm("PostQuestion", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("PostQuestion", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
             {
-                <table>
-                    <tr>
-                        <td>
-                            Title
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(a => a.Title )
-                        </td>
-                    </tr>
+                <div class="form-group label-floating">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <label class="control-label" for="Title"><strong>Title</strong></label>
+                        @Html.TextBoxFor(u => u.Title, new { @class = "form-control", id = "Title", placeholder = "Enter Title", required = "required" })
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+                <div class="form-group label-floating">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <label class="control-label" for="Batch"><strong>Batch</strong></label>
+                        @Html.DropDownList("Batch", (IEnumerable<SelectListItem>)ViewData["BatchList"], new { onchange = "getAssignments()", id = "Batch", required = "required", @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+                <div class="form-group label-floating">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <label class="control-label" for="Deadline"><strong>Deadline</strong></label>
+                        <input type="date" name="Deadline" id="Deadline" class="form-control" required />
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+                <div class="form-group label-floating">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <label class="control-label" for="QueFile"><strong>Document</strong></label>
+                        <input type="file" class="form-control" id="QueFile" name="QueFile" accept=".pdf" />
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
 
-                    <tr>
-                        <td>
-                            Batch
-                        </td>
-                        <td>
-                            @Html.DropDownList("BatchId", (IEnumerable<SelectListItem>)ViewData["BatchList"], new { onchange = "getAssignments()", id = "BatchId" })
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            Deadline
-                        </td>
-                        <td>
-                            <input type="date" name="Deadline" id="Deadline"/>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            Document
-                        </td>
-                        <td>
-                            <input type="file" id="QueFile" name="QueFile" accept=".pdf" />
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="2">
-                            <input type="submit" name="Post" />
-                        </td>
-                    </tr>
-                </table>
-
-                <div>
-                    @ViewBag.Message
+                <div class="form-group">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <input type="submit" class="btn btn-primary" value="Post" />
+                    </div>
+                    <div class="col-sm-2"></div>
                 </div>
             }
+            <div class="well">
+                @ViewBag.Message
+            </div>
+
         </div>
     </div>
 </div>
@@ -80,12 +79,14 @@
 
     function uploadFile() {
         var file = document.getElementById("Document").value;
-        $.post("/Assignment/UploadFile", {file : file}, null);
+        $.post("/Assignment/UploadFile", { file: file }, null);
     }
-    
+
     function getAssignments() {
         $.get("GetAssignmentsForTeacher", { batchId: $('#ddlBatchId').val() }, PrintAssingments, 'JSON');
     }
+
+    getAssignments()
 
     function PrintAssingments(data) {
         $('#Assignments').empty();
