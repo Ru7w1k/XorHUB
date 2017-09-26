@@ -2,24 +2,53 @@
 @{
     ViewBag.Title = "Student";
 }
+<br /><br />
 
-<h2>Student</h2>
 <div class="container">
     <div class="row">
         @ViewBag.Message
     </div>
     <div class="row">
-        <div class="col-md-3" >
-             My Submissions
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <p class="panel-title">My Submissions</p>
+                </div>
+                <div class="panel-body" id="mySubmissions">
+                    @foreach (Solution sol in (IEnumerable<Solution>)ViewBag.Solutions)
+                    {
+                        <div class="panel panel-body">
+                            <h5> <a href=@Url.Content(string.Format("/Assignment/StudentResponse/{0}", sol.AssignmentId))> @sol.Assignment.Title</a><small> @sol.UploadedOn.ToShortDateString() </small> </h5>
+                            
+                                @switch (sol.Stat)
+                                {
+                                    case "A":
+                                    <p>Status : Approved</p>
+                                        break;
+
+                                    case "R":
+                                        <p>Status : Rejected</p>
+                                        break;
+
+                                    case "P":
+                                        <p>Status : Pending</p>
+                                        break;
+                                }
+                                
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
-        <div class="col-md-1" > </div>
-        <div class="col-md-8" id="divAssignments">
+        <div class="col-md-1"> </div>
+        <div class="col-md-7" id="divAssignments">
             @foreach (Assignment ass in (IEnumerable<Assignment>)ViewBag.Assignments)
             {
-                <a href=@Url.Content(string.Format("/Assignment/StudentResponse/{0}", ass.AssignmentId))>Attempt</a> 
-                <div> <center> <h3>  @ass.Title <small> @ass.TeacherName </small> </h3> </center>
-                    <p> Deadline :  @ass.Deadline </p>
-                    <p>Attempted By 20%,Submitted by 10%</p>
+                <div class="panel">
+                    <div class="panel-body">
+                        <h4> <a href=@Url.Content(string.Format("/Assignment/StudentResponse/{0}", ass.AssignmentId))> @ass.Title</a><small> @ass.TeacherName </small> </h4>
+                        <p> Deadline : @ass.Deadline </p>
+                    </div>
                 </div>
             }
         </div>
@@ -37,5 +66,5 @@
     //        $("#divAssignments").append(row);
     //    }
     //}
-    
+
 </script>

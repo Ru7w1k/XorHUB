@@ -14,7 +14,6 @@
         }
         div.tab {
             overflow: hidden;
-            border: 1px solid #ccc;
             width: 400px;
         }
 
@@ -42,6 +41,8 @@
                 /*Change background color of buttons on hover*/
                 div.tab button:hover {
                     background-color: #ddd;
+                    -webkit-animation: border 1s;
+                    animation: border 1s;
                 }
 
                 /*Create an active/current tablink class*/
@@ -54,16 +55,32 @@
         .tabcontent {
             display: none;
             padding: 6px 12px;
-            -webkit-animation: fadeEffect 5s;
-            animation: fadeEffect 5s;
+            -webkit-animation-duration: 0.5s;
+            animation-duration: 0.5s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            -webkit-animation-name: fadeIn;
+            animation-name: fadeIn;
         }
+
+        @@-webkit-keyframes fadeIn {
+            0% {opacity: 0;}
+            100% {opacity: 1;}
+         }
+         
+         @@keyframes fadeIn {
+            0% {opacity: 0;}
+            100% {opacity: 1;}
+         }
+
     </style>
 </head>
 <body>
     <center>
         <br /><br />
-        <div class="tab">
-            <div class="tab nav nav-tabs">
+
+        <div class="tab panel panel-body">
+            <div class="tab">
                 <button class="tablinks" onclick="openTab(event, 'Login')" id="defaultOpen">Login</button>
                 <button class="tablinks" onclick="openTab(event, 'Signup')">Signup</button>
             </div>

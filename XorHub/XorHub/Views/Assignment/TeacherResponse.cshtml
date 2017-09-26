@@ -5,48 +5,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script type="text/javascript">
-
-</script>
+<br /><br />
 
 <div class="container">
-    <table>
-        <tr>
-            <td>
-                <h2>Title</h2>
-            </td>
-            <td>
-                @Model.Assignment.Title
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h2>Batch</h2>
-            </td>
-            <td>
-                @Model.Assignment.BatchId
-            </td>
-        </tr>
-
-    </table>
-
-    <div>
+    <div class="panel panel-body">
+        <h5 style="font-size: 16px"><strong>Title </strong>: @Model.Assignment.Title </h5>
+        <h5 style="font-size: 16px"><strong>Batch </strong>: @Model.Assignment.BatchId </h5>
+    </div>
+  
+    <div class="panel panel-body">
         <embed src=@Url.Content(String.Format("{0}", ViewBag.filePath)) width="100%" height="400" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
     </div>
 
-    <div>
+    <div class="panel panel-body">
         @using (Html.BeginForm("submit", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(u => u.Assignment.AssignmentId)
 
             <div>
-                <h3>Responses</h3>
+                <h4>Responses</h4>
                 @foreach (Solution sol in (IEnumerable<Solution>)ViewBag.solutions)
                 {
-                    <div class="row">
-                        <a href=@Url.Content(String.Format("/Assignment/Response/{0}", sol.SolutionId))>
+                    <div class="row response">
+                        <a href=@Url.Content(string.Format("/Assignment/Response/{0}", sol.SolutionId))>
                             <div class="col-md-4">
-                                <h4><strong> @sol.Username</strong> </h4>
+                                <h5><strong> @sol.Username</strong> </h5>
                             </div>
                             <div class="col-md-2">
                                 <small> @sol.UploadedOn</small>

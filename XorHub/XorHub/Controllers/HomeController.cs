@@ -58,14 +58,24 @@ namespace XorHub.Controllers
             }
 
             List<Assignment> assignmentList = new List<Assignment>();
+            List<Solution> solutionList = new List<Solution>();
+
             using (XorHubEntities db = new XorHubEntities())
             {
                 var userName = Session["username"].ToString();
                 var userBatchId = db.LoginInfoes.Where(u => u.Username.Equals(userName)).FirstOrDefault().BatchId;
                 assignmentList = db.Assignments.Where(a => a.BatchId == userBatchId).ToList();
+
+                solutionList = db.Solutions.Where(s => s.Username.Equals(userName)).ToList();
+                foreach( Solution sol in solutionList)
+                {
+                    sol.Assignment = db.Assignments.Where(a => a.AssignmentId == sol.AssignmentId).ToList().FirstOrDefault();
+                }
+
             }
 
             ViewBag.Assignments = assignmentList;
+            ViewBag.Solutions = solutionList;
 
             return View();
         }

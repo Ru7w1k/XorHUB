@@ -213,6 +213,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ripples.css" />
     <Content Include="Content\ripples.min.css" />
+    <Content Include="Content\xoriantlogo.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -248,6 +249,7 @@
     <Content Include="Content\bootstrap-material-design.min.css.map" />
     <Content Include="Content\ripples.css.map" />
     <Content Include="Content\ripples.min.css.map" />
+    <None Include="Properties\PublishProfiles\XorHubPublish.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

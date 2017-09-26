@@ -20,14 +20,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <img src="~/Content/xoriantlogo.jpg" height="55px" width="auto" style="float:left; padding-top:10px; padding-right: 10px" />
                 @Html.ActionLink("XorHUB", "Index", "Index", new { area = "" }, new { @class = "navbar-brand", style = "color: white" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" style="float:right">
                     @if (Session["username"] != null)
                     {
-                        <li><a>@Session["username"]</a></li>
-                        <li><a href="/Index/Logout">Logout</a></li>
+                        <li><a style="font-size: 16px">@Session["username"]</a></li>
+                        <li><a style="font-size: 16px" href="/Index/Logout">Logout</a></li>
                     }
                 </ul>
 

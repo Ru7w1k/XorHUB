@@ -150,6 +150,14 @@ namespace XorHub.Controllers
                 }
             }
 
+            if(model.Usertype.Equals("A"))
+            {
+                Session["username"] = model.Username;
+                Session["usertype"] = model.Usertype;
+                ViewBag.username = model.Username;
+                return RedirectToAction("Admin", "home");
+            }
+
             Session["username"] = model.Username;
             Session["usertype"] = model.Usertype;
             ViewBag.username = model.Username;
