@@ -116,8 +116,13 @@ namespace XorHub.Controllers
             return Json(finalList, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Teacher()
+        public ActionResult Teacher(int? id)
         {
+            if(id == 1)
+            {
+                ViewBag.Message = "Please Select File!";
+            }
+
             if (Session["username"] == null || Session["usertype"] == null)
             {
                 return RedirectToRoute(new
@@ -139,6 +144,7 @@ namespace XorHub.Controllers
                 });
                 //return RedirectToAction("Index", "Index", 2);
             }
+
             using (XorHubEntities db = new XorHubEntities())
             {
                 List<SelectListItem> list = new List<SelectListItem>();

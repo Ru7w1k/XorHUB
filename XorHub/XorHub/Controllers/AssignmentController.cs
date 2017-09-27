@@ -36,7 +36,7 @@ namespace XorHub.Controllers
 
                 ViewData["BatchList"] = list;
             }
-            ViewBag.filePath = "~/Database/Questions/" + id + ".pdf";
+            ViewBag.filePath = "~/Database/Solutions/" + Session["username"].ToString() + "/" + id + ".pdf";
             ViewBag.state = false;
 
             return View(asModel);
@@ -79,13 +79,27 @@ namespace XorHub.Controllers
             assignment.PostedDate = DateTime.Now;
             assignment.TeacherName = Session["username"].ToString();
 
+ 
+
+            if (!Directory.Exists(Server.MapPath("~/Database/Questions/")))
+            {
+                Directory.CreateDirectory(Server.MapPath("~/Database/Questions/"));
+            }
+
+            try
+            {
+                QueFile.SaveAs(Path.Combine(Server.MapPath("~/Database/Questions"), assignment.AssignmentId.ToString() + ".pdf"));
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Teacher", "Home", new { id = 1 });
+            }
+
             using (XorHubEntities db = new XorHubEntities())
             {
                 db.Assignments.Add(assignment);
                 db.SaveChanges();
             }
-
-            QueFile.SaveAs(Path.Combine(Server.MapPath("~/Database/Questions"), assignment.AssignmentId.ToString() + ".pdf"));
 
             ViewBag.Message = "Question Successfully uploaded!";
 
@@ -100,7 +114,17 @@ namespace XorHub.Controllers
                 Directory.CreateDirectory(Server.MapPath("~/Database/Solutions/" + Session["username"].ToString()));
             }
 
-            solutionDoc.SaveAs(Path.Combine(Server.MapPath("~/Database/Solutions/" + Session["username"].ToString() + "/"), asModel.Assignment.AssignmentId + ".pdf"));
+            try
+            {
+                solutionDoc.SaveAs(Path.Combine(Server.MapPath("~/Database/Solutions/" + Session["username"].ToString() + "/"), asModel.Assignment.AssignmentId + ".pdf"));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = "Please Select File!";
+                ViewBag.filePath = "~/Database/Solutions/" + Session["username"].ToString() + "/" + asModel.Assignment.AssignmentId + ".pdf";
+                return View("StudentResponse", asModel);
+            }
+
 
             Solution soln = new Solution() {
                 AssignmentId = asModel.Assignment.AssignmentId,

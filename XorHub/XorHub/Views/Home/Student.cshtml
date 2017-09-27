@@ -18,7 +18,7 @@
                     @foreach (Solution sol in (IEnumerable<Solution>)ViewBag.Solutions)
                     {
                         <div class="panel panel-body">
-                            <h5> <a href=@Url.Content(string.Format("/Assignment/StudentResponse/{0}", sol.AssignmentId))> @sol.Assignment.Title</a><small> @sol.UploadedOn.ToShortDateString() </small> </h5>
+                            <h5> <a href=@Url.Content(string.Format("/Assignment/Response/{0}", sol.SolutionId))> @sol.Assignment.Title</a><small> @sol.UploadedOn.ToShortDateString() </small> </h5>
                             
                                 @switch (sol.Stat)
                                 {

@@ -11,6 +11,25 @@ namespace XorHub.Controllers
         // GET: Index
         public ActionResult Index(int? id)
         {
+
+            if (Session["usertype"] != null)
+            {
+                switch (Session["usertype"].ToString())
+                {
+                    case "A":
+                        return RedirectToAction("Admin", "Home");
+
+                    case "T":
+                        return RedirectToAction("Teacher", "Home");
+
+                    case "S":
+                        return RedirectToAction("Student", "Home");
+
+                    default:
+                        break;
+                }
+            }
+
             if (id != null)
             {
                 switch (id)
