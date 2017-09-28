@@ -264,7 +264,5 @@ namespace XorHub.Controllers
 
             return RedirectToAction("TeacherResponse", new { id = sol.AssignmentId });
         }
-
-
     }
 }
