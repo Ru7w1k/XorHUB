@@ -46,7 +46,7 @@ namespace XorHub.Controllers
 
                 ViewData["BatchList"] = list;
             }
-            ViewBag.filePath = "~/Database/Solutions/" + Session["username"].ToString() + "/" + id + ".pdf";
+            ViewBag.filePath = "~/Database/Questions/"+ id + ".pdf";
             ViewBag.state = false;
 
             return View(asModel);
@@ -107,13 +107,23 @@ namespace XorHub.Controllers
         public ActionResult PostQuestion(HttpPostedFileBase QueFile, Assignment assignment)
         {
             assignment.PostedDate = DateTime.Now;
-            assignment.TeacherName = Session["username"].ToString();
+            
+            if (assignment.Deadline < assignment.PostedDate)
+            {
+                return RedirectToAction("Teacher", "Home", new { id = 4}); 
+            }
 
- 
+            assignment.TeacherName = Session["username"].ToString();
 
             if (!Directory.Exists(Server.MapPath("~/Database/Questions/")))
             {
                 Directory.CreateDirectory(Server.MapPath("~/Database/Questions/"));
+            }
+
+            using (XorHubEntities db = new XorHubEntities())
+            {
+                db.Assignments.Add(assignment);
+                db.SaveChanges();
             }
 
             try
@@ -125,11 +135,7 @@ namespace XorHub.Controllers
                 return RedirectToAction("Teacher", "Home", new { id = 1 });
             }
 
-            using (XorHubEntities db = new XorHubEntities())
-            {
-                db.Assignments.Add(assignment);
-                db.SaveChanges();
-            }
+
 
             ViewBag.Message = "Question Successfully uploaded!";
 
@@ -139,6 +145,13 @@ namespace XorHub.Controllers
         [HttpPost]
         public ActionResult Submit(HttpPostedFileBase solutionDoc, AssignmentSolutionModel asModel)
         {
+            if(asModel.Assignment.Deadline < DateTime.Now)
+            {
+                ViewBag.Message = "Deadline crossed! Cannot Submit Solution";
+                ViewBag.filePath = "~/Database/Questions/" + asModel.Assignment.AssignmentId + ".pdf";
+                return View("StudentResponse", asModel);
+            }
+
             if (!Directory.Exists(Server.MapPath("~/Database/Solutions/" + Session["username"].ToString())))
             {
                 Directory.CreateDirectory(Server.MapPath("~/Database/Solutions/" + Session["username"].ToString()));
@@ -151,7 +164,7 @@ namespace XorHub.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = "Please Select File!";
-                ViewBag.filePath = "~/Database/Solutions/" + Session["username"].ToString() + "/" + asModel.Assignment.AssignmentId + ".pdf";
+                ViewBag.filePath = "~/Database/Questions/" + asModel.Assignment.AssignmentId + ".pdf";
                 return View("StudentResponse", asModel);
             }
 
@@ -168,8 +181,18 @@ namespace XorHub.Controllers
             {
                 try
                 {
-                    db.Solutions.Add(soln);
-                    db.SaveChanges();
+                    string userName = Session["username"].ToString();
+                    if (db.Solutions.Any(s => s.Username.Equals(userName) && s.AssignmentId == asModel.Assignment.AssignmentId))
+                    {
+                        var tmp = db.Solutions.Where(s => s.Username.Equals(userName) && s.AssignmentId == asModel.Assignment.AssignmentId).FirstOrDefault();
+                        tmp = soln;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        db.Solutions.Add(soln);
+                        db.SaveChanges();
+                    }
                 }
                 catch (DbEntityValidationException e)
                 {

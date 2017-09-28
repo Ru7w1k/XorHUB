@@ -14,8 +14,10 @@
 
     <div class="panel panel-body">
         <h5 style="font-size: 16px"><strong>Response </strong>: </h5>
-        <embed src=@Url.Content(String.Format("~/Database/Solutions/{0}/{1}.pdf", Model.Username, Model.AssignmentId)) width="100%" height="400" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+        <embed src=@Url.Content(String.Format("~/Database/Solutions/{0}/{1}.pdf", Model.Username, Model.Assignment.AssignmentId)) width="100%" height="400" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
     </div>
+
+
 
     @if (ViewBag.IsDisplay)
     {
@@ -33,5 +35,17 @@
             }
         </div>
     }
+    else
+    {
+        if (Model.Comment != null)
+        {
+            <div class="panel panel-body">
+                <h5 style="font-size: 16px"><strong>Comment </strong>: </h5>
+                @Model.Comment
+            </div>
+        }
+    }
+
+
 </div>
 

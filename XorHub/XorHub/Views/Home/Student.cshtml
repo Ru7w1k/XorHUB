@@ -15,6 +15,11 @@
                     <p class="panel-title">My Submissions</p>
                 </div>
                 <div class="panel-body" id="mySubmissions">
+                    @if(((List<Solution>)ViewBag.Solutions).Count == 0)
+                    {
+                            <h6> No Submissions..</h6>
+                    }
+
                     @foreach (Solution sol in (IEnumerable<Solution>)ViewBag.Solutions)
                     {
                         <div class="panel panel-body">
@@ -42,6 +47,11 @@
         </div>
         <div class="col-md-1"> </div>
         <div class="col-md-7" id="divAssignments">
+            @if (((List<Assignment>)ViewBag.Assignments).Count == 0)
+            {
+                <h5> No Questions..</h5>
+            }
+
             @foreach (Assignment ass in (IEnumerable<Assignment>)ViewBag.Assignments)
             {
                 <div class="panel">

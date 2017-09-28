@@ -12,6 +12,38 @@ namespace XorHub.Controllers
 
         public ActionResult Admin()
         {
+            if (Session["username"] == null || Session["usertype"] == null)
+            {
+                return RedirectToRoute(new
+                {
+                    controller = "Index",
+                    action = "Index",
+                    id = 1
+                });
+            }
+
+            switch (Session["usertype"].ToString())
+            {
+                case "T":
+                    return RedirectToRoute(new
+                    {
+                        controller = "Home",
+                        action = "Teacher",
+                        id = 2
+                    });
+
+                case "S":
+                    return RedirectToRoute(new
+                    {
+                        controller = "Home",
+                        action = "Student",
+                        id = 2
+                    });
+
+                case "A":
+                default:
+                    break;
+            }
             return View();
         }
 
@@ -121,6 +153,11 @@ namespace XorHub.Controllers
             if(id == 1)
             {
                 ViewBag.Message = "Please Select File!";
+            }
+
+            if(id == 4)
+            {
+                ViewBag.Message = "Please Select Valid Date!";
             }
 
             if (Session["username"] == null || Session["usertype"] == null)
