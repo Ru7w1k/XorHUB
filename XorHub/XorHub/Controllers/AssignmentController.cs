@@ -15,6 +15,16 @@ namespace XorHub.Controllers
         // GET: Assignment
         public ActionResult StudentResponse(int id)
         {
+            if (Session["username"] == null || Session["usertype"] == null)
+            {
+                return RedirectToRoute(new
+                {
+                    controller = "Index",
+                    action = "Index",
+                    id = 1
+                });
+            }
+
             AssignmentSolutionModel asModel = new AssignmentSolutionModel();
             asModel.Solution = new Solution() { Stat = "P"};
 
@@ -44,6 +54,16 @@ namespace XorHub.Controllers
 
         public ActionResult ViewResponse(int id)
         {
+            if (Session["username"] == null || Session["usertype"] == null)
+            {
+                return RedirectToRoute(new
+                {
+                    controller = "Index",
+                    action = "Index",
+                    id = 1
+                });
+            }
+
             AssignmentSolutionModel asModel = new AssignmentSolutionModel();
             List<Solution> listSolutions = new List<Solution>();
             using (XorHubEntities db = new XorHubEntities())
@@ -59,6 +79,16 @@ namespace XorHub.Controllers
 
         public ActionResult TeacherResponse(int id)
         {
+            if (Session["username"] == null || Session["usertype"] == null)
+            {
+                return RedirectToRoute(new
+                {
+                    controller = "Index",
+                    action = "Index",
+                    id = 1
+                });
+            }
+
             AssignmentSolutionModel asModel = new AssignmentSolutionModel();
             List<Solution> listSolutions = new List<Solution>();
             using (XorHubEntities db = new XorHubEntities())
@@ -158,6 +188,16 @@ namespace XorHub.Controllers
 
         public new ActionResult Response(int id)
         {
+            if (Session["username"] == null || Session["usertype"] == null)
+            {
+                return RedirectToRoute(new
+                {
+                    controller = "Index",
+                    action = "Index",
+                    id = 1
+                });
+            }
+
             Solution sol = new Solution();
             using (XorHubEntities db = new XorHubEntities())
             {

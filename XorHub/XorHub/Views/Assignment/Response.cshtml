@@ -20,13 +20,13 @@
     @if (ViewBag.IsDisplay)
     {
         <div class="panel panel-body">
-            using (Html.BeginForm("Action", "Assignment", FormMethod.Post))
+            @using (Html.BeginForm("Action", "Assignment", FormMethod.Post))
             {
             @Html.HiddenFor(s => s.SolutionId)
             @Html.HiddenFor(s => s.AssignmentId)
 
             <h5 style="font-size: 16px"><strong> Comment </strong>: </h5>
-            @Html.TextAreaFor(s => s.Comment, new { cols = "250", style = "width: 100", placeholder = "Enter Comment Here.." })
+            @Html.TextAreaFor(s => s.Comment, new {  style = "width: 100", placeholder = "Enter Comment Here.." })
             <br />
             <input class="btn btn-primary" type="submit" name="Approve" value="Approve" />
             <input class="btn btn-primary" type="submit" name="Reject" value="Reject" />
