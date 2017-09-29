@@ -30,6 +30,7 @@
             @Html.HiddenFor(u => u.Assignment.AssignmentId)
             @Html.HiddenFor(a => a.Assignment.BatchId)
             @Html.HiddenFor(t => t.Assignment.Title)
+            @Html.HiddenFor(t => t.Assignment.Deadline)
             <div class="response">
                 <h5>Solution</h5>
                 <input class="form-control" type="file" id="solutionDoc" name="solutionDoc" accept=".pdf" />
