@@ -102,8 +102,6 @@
         $.get("/Home/GetAssignmentsForTeacher", { batchId: $('#ddlBatchId').val() }, PrintAssingments, 'JSON');
     }
 
-
-
     function PrintAssingments(data) {
         $('#Assignments').empty();
         for (var i = 0 ; i < data.length ; i++) {

@@ -15,31 +15,31 @@
                     <p class="panel-title">My Submissions</p>
                 </div>
                 <div class="panel-body" id="mySubmissions">
-                    @if(((List<Solution>)ViewBag.Solutions).Count == 0)
+                    @if (((List<Solution>)ViewBag.Solutions).Count == 0)
                     {
-                            <h6> No Submissions..</h6>
+                        <h6> No Submissions..</h6>
                     }
 
                     @foreach (Solution sol in (IEnumerable<Solution>)ViewBag.Solutions)
                     {
                         <div class="panel panel-body">
                             <h5> <a href=@Url.Content(string.Format("/Assignment/Response/{0}", sol.SolutionId))> @sol.Assignment.Title</a><small> @sol.UploadedOn.ToShortDateString() </small> </h5>
-                            
-                                @switch (sol.Stat)
-                                {
-                                    case "A":
+
+                            @switch (sol.Stat)
+                            {
+                                case "A":
                                     <p>Status : Approved</p>
-                                        break;
+                                    break;
 
-                                    case "R":
-                                        <p>Status : Rejected</p>
-                                        break;
+                                case "R":
+                                    <p>Status : Rejected</p>
+                                    break;
 
-                                    case "P":
-                                        <p>Status : Pending</p>
-                                        break;
-                                }
-                                
+                                case "P":
+                                    <p>Status : Pending</p>
+                                    break;
+                            }
+
                         </div>
                     }
                 </div>

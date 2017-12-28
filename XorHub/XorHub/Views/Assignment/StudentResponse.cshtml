@@ -30,12 +30,21 @@
             @Html.HiddenFor(u => u.Assignment.AssignmentId)
             @Html.HiddenFor(a => a.Assignment.BatchId)
             @Html.HiddenFor(t => t.Assignment.Title)
+            @Html.HiddenFor(t => t.Assignment.Deadline)
             <div class="response">
                 <h5>Solution</h5>
                 <input class="form-control" type="file" id="solutionDoc" name="solutionDoc" accept=".pdf" />
                 <br />
                 <input class="btn btn-primary" type="submit" name="Submit" value="Submit"
                         onsubmit= "return checkFile()" />
+                
+                @* Allow student to view other solutions if its solution is approved *@
+                
+                @if (Model.Solution.Stat.Equals("A"))
+                {
+                    <a href=@Url.Content(String.Format("/Assignment/ViewResponse/{0}", Model.Assignment.AssignmentId))> View Responses </a>
+                }
+
             </div>
         }
     </div>
@@ -53,9 +62,6 @@
             return true;
         }
     }
-
-
-
 </script>
 
 
